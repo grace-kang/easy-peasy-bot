@@ -29,7 +29,7 @@ module.exports = function(controller) {
 		var attach = [
 			{
 			"color": "#F7DC6F",
-			"pretext": ":warning: You have not yet submitted an entry this week!",
+			"pretext": ":warning: You have not yet submitted an entry this week. :warning: \nYou will be reminded every day until you submit the form.",
 			"author_name": "NagBot inc.",
 			"title": "Important Form",
 			"title_link": process.env.FORM_URL,
@@ -72,8 +72,8 @@ module.exports = function(controller) {
 	//this rule will execute the job every weekday at 9:00 AM
 	var rule = new schedule.RecurrenceRule();
 	rule.dayOfWeek = new schedule.Range(1, 5);
-	// rule.hour = 9;
-	// rule.minute = 0;
+	rule.hour = 9;
+	rule.minute = 0;
 	rule.second = 0;
 
 	var job = schedule.scheduleJob(rule, function() {
