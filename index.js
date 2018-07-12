@@ -1,4 +1,6 @@
-require('dotenv').config()
+require('dotenv').config();
+require('node-schedule');
+
 /**
  * A Bot for Slack!
  */
@@ -52,6 +54,10 @@ if (process.env.TOKEN || process.env.SLACK_TOKEN) {
 	//Treat this as an app
 	var app = require('./lib/apps');
 	var controller = app.configure(process.env.PORT, process.env.CLIENT_ID, process.env.CLIENT_SECRET, config, onInstallation);
+  var normalizedPath = require("path").join(__dirname, "skills");
+  require("fs").readdirSync(normalizedPath).forEach(function(file) {
+		require("./skills/" + file)(controller);
+	});
 } else {
 	console.log('Error: If this is a custom integration, please specify TOKEN in the environment. If this is an app, please specify CLIENTID, CLIENTSECRET, and PORT in the environment');
 	process.exit(1);
@@ -84,91 +90,6 @@ controller.on('rtm_close', function (bot) {
 
 controller.on('bot_channel_join', function (bot, message) {
 	bot.reply(message, "I'm here!")
-});
-
-controller.hears(
-		['hello', 'hi', 'greetings', 'hey'], 
-		['direct_message', 'mention', 'direct_mention'], 
-		function (bot, message) {
-			bot.reply(message, 'Hello!');
-		}
-		);
-
-
-/**
- * AN example of what could be:
- * Any un-handled direct mention gets a reaction and a pat response!
- */
-controller.on('direct_message,mention,direct_mention', function (bot, message) {
-	bot.api.reactions.add({
-		timestamp: message.ts,
-		channel: message.channel,
-		name: 'robot_face',
-	}, function (err) {
-		if (err) {
-			console.log(err)
-		}
-		bot.reply(message, 'Yes?');
-	});
-});
-
-var bot = controller.spawn({
-	incoming_webhook: {
-		url: 'https://hooks.slack.com/services/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'
-	}
-})
-
-/* Grab all the IM ids, user ids, and emails of all the users in the team
- * NOTE: assumes that a DM is automatically generated for each user
- */
-var oauth= process.env.OAUTH_TOKEN
-var schedule = require('node-schedule');
-var jobs = []
-var dms = []
-bot.api.im.list({ token: oauth }, function(err, response) {
-	if (err) {
-		console.log(err)
-	}
-	console.log('IM.LIST')
-		for (var i in response.ims) {
-			if (response.ims[i].user != 'USLACKBOT'){
-				var id = response.ims[i].id
-					var user = response.ims[i].user
-					dms.push({ id: id, user: user })
-			}
-		}
-	bot.api.users.list({ token: oauth }, function(err, user_response) {
-		if (err) {
-			console.log(err)
-		}
-		console.log('USER.LIST')
-			for (i in user_response.members) {
-				console.log(user_response.members[i])
-				if (!user_response.members[i].is_bot && user_response.members[i].id != 'USLACKBOT') {
-					user = user_response.members[i].id
-						for (j in dms) {
-							if (dms[j].user == user) {
-								dms[j].email = user_response.members[i].profile.email
-							}
-						}
-				}
-			}
-			//dms is created, put logic here
-			console.log(dms)
-			for (i in dms) {
-				var j = schedule.scheduleJob('*/2****', function() {
-					console.log('job ran for ' + dms[i].id);	
-					bot.api.chat.postMessage({ token: oauth, channel: dms[i].id, text: 'hello' }, function(err, res){
-						if (err) {
-							console.log(err)
-						}	
-						console.log('successfully send direct message')
-					})
-				})
-				jobs.push(j)
-			}
-		// console.log(jobs)
-	});
 });
 
 
