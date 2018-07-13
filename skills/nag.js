@@ -14,7 +14,7 @@ module.exports = function(controller) {
 	const axios = require('axios');
 
 	/*
-	 * Makes a GET request to SCRIPT_URL with today's date
+	 * Makes a GET request to REQUEST_URL with today's date
 	 * Gets a list of emails to direct message on Slack
 	 * Sends the attach variable to all the users
 	 */
@@ -32,13 +32,13 @@ module.exports = function(controller) {
 			"pretext": ":warning: You have not yet submitted an entry this week. :warning: \nYou will be reminded every day until you submit the form.",
 			"author_name": "NagBot inc.",
 			"title": "Important Form",
-			"title_link": process.env.FORM_URL,
+			"title_link": process.env.WEB_URL,
 			"text": "This is a form you were supposed to submit.",
 			"ts": today.getTime()/1000
 			}
 		];
 
-		axios.get(process.env.SCRIPT_URL + '?date=' + inputDate)
+		axios.get(process.env.REQUEST_URL + '?date=' + inputDate)
 			.then(function(response) { 
 				var res= response.data.displayEditors;
 				var editors = [];

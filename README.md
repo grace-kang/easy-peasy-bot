@@ -22,8 +22,8 @@ This bot will make a request to a Google Sheets script and retrieve a list of em
 		PORT=
 		BOT_TOKEN=
 		WEBHOOK_URL=
-		SCRIPT_URL=
-		FORM_URL=
-    ```
+		REQUEST_URL=
+		WEB_URL=
+		```
 
 8. Run `npm start` in your terminal to run the bot locally.
