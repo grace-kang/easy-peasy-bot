@@ -22,10 +22,10 @@
   },
   "homepage": "https://github.com/grace-kang/nagbot-slack#readme",
   "engines": {
-    "node": "5.1.1"
+    "node": "5.1.1",
+    "npm": "6.1.0"
   },
   "dependencies": {
-    "npm": "^6.1.0",
     "axios": "^0.18.0",
     "botkit": "^0.6.15",
     "botkit-storage-mongo": "^1.0.2",
