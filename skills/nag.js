@@ -50,7 +50,7 @@ module.exports = function(controller) {
 					if (dms[i].remind && editors.includes(dms[i].email)) {
 						var id = dms[i].id;
 						console.log('job ran for ' + dms[i].email);
-						bot.api.chat.postMessage({ token: process.env.OAUTH_TOKEN, channel: id, attachments: attach}, function(err, res){
+						bot.api.chat.postMessage({ token: process.env.BOT_TOKEN, channel: id, attachments: attach}, function(err, res){
 							if (err) {
 								console.log(err)
 							}
@@ -78,7 +78,7 @@ module.exports = function(controller) {
 
 	var job = schedule.scheduleJob(rule, function() {
 		var dms = [];
-		bot.api.im.list({ token: process.env.OAUTH_TOKEN }, function(err, response) {
+		bot.api.im.list({ token: process.env.BOT_TOKEN }, function(err, response) {
 			if (err) {
 				console.log(err)
 			}
@@ -87,7 +87,7 @@ module.exports = function(controller) {
 					var user = response.ims[i].user
 					dms.push({ id: id, user: user })
 			}
-			bot.api.users.list({ token: process.env.OAUTH_TOKEN }, function(err, user_response) {
+			bot.api.users.list({ token: process.env.BOT_TOKEN }, function(err, user_response) {
 				if (err) {
 					console.log(err)
 				}
