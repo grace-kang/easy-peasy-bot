@@ -13,6 +13,13 @@ module.exports = function(controller) {
 	var schedule = require('node-schedule');
 	const axios = require('axios');
 
+	//this rule will execute the job every weekday at 9:00 AM
+	var rule = new schedule.RecurrenceRule();
+	rule.dayOfWeek = new schedule.Range(1, 5);
+	// rule.hour = 9;
+	// rule.minute = 0;
+	rule.second = 0;
+
 	/*
 	 * Makes a GET request to REQUEST_URL with today's date
 	 * Gets a list of emails to direct message on Slack
@@ -69,12 +76,6 @@ module.exports = function(controller) {
 	 */
 
 	//this rule will execute the job every weekday at 9:00 AM
-	var rule = new schedule.RecurrenceRule();
-	rule.dayOfWeek = new schedule.Range(1, 5);
-	rule.hour = 9;
-	rule.minute = 0;
-	rule.second = 0;
-
 	var job = schedule.scheduleJob(rule, function() {
 		var dms = [];
 		var last_week = [];
