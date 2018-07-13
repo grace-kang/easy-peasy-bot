@@ -19,7 +19,6 @@ module.exports = function(controller) {
 	 * Sends the attach variable to all the users
 	 */
 	function nagUsers(dms) {
-		// var email = 'grace@stembolt.com'; //TODO: fix script so doGET doesn't required an email
 		var today = new Date(Date.now());
 		var inputDate = today.toISOString().split('T')[0];
 
@@ -78,6 +77,7 @@ module.exports = function(controller) {
 
 	var job = schedule.scheduleJob(rule, function() {
 		var dms = [];
+		var last_week = [];
 		bot.api.im.list({ token: process.env.BOT_TOKEN }, function(err, response) {
 			if (err) {
 				console.log(err)
@@ -109,6 +109,21 @@ module.exports = function(controller) {
 			});
 		});
 	});
+
+	/*
+	 * When 'progress' is heard, will reply current progress of the user
+	 */
+	// controller.hears('^progress', 'direct_message,direct_mention', function(bot, message) {
+	// 	var user = message.user;
+	// 	for (i in dms) {
+	// 		if (user == dms[i].user) {
+	// 			var user_dm = dms[i].id;
+	// 			var user_email = dms[i].email;
+	// 		}
+	// 	}
+	// 	axios.get(REQUEST_URL + '?email=' + user_email)
+	// 		.then(function(response) {
+	// 			
 }
 
 
