@@ -1,7 +1,7 @@
 # nagbot-slack
 
 ## Usage
-This bot will make a request to a Google Sheets script and retrieve a list of emails corresponding to Slack users in the workspace it resides in. It will then send a daily direct message to every user with an attachment until that user's email has been cleared from the list.
+This bot will make a request to an external API and retrieve a list of emails corresponding to Slack users in the workspace it resides in. It will then send a daily direct message to every user with an attachment until that user's email has been cleared from the list.
 
 **Possible Use**: Remind Slack users to fill out a form that posts to a Google Sheets spreadsheet that requires weekly submissions. If a user has already completed their weekly submission, the bot will stop reminding the user that week. Otherwise, the bot will continue to remind the user.
 
