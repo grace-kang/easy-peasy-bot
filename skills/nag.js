@@ -20,6 +20,8 @@ module.exports = function(controller) {
 	rule.minute = 0;
 	rule.second = 0;
 
+  var dms = [];
+
 	/*
 	 * Makes a GET request to REQUEST_URL with today's date
 	 * Gets a list of emails to direct message on Slack
@@ -54,6 +56,7 @@ module.exports = function(controller) {
 				console.log(editors);
 				for (i in dms) {
 					if (dms[i].remind && editors.includes(dms[i].email)) {
+            console.log(dms[i].email + ': ' + dms[i].remind);
 						var id = dms[i].id;
 						console.log('job ran for ' + dms[i].email);
 						bot.api.chat.postMessage({ token: process.env.BOT_TOKEN, channel: id, attachments: attach}, function(err, res){
@@ -109,38 +112,7 @@ module.exports = function(controller) {
 	 */
 
 	var job = schedule.scheduleJob(rule, function() {
-		//update dms in case there are new users in the workspace
-		dms = [];
-		bot.api.im.list({ token: process.env.BOT_TOKEN }, function(err, response) {
-			if (err) {
-				console.log(err)
-			}
-			for (var i in response.ims) {
-				var id = response.ims[i].id
-					var user = response.ims[i].user
-					dms.push({ id: id, user: user })
-			}
-			bot.api.users.list({ token: process.env.BOT_TOKEN }, function(err, user_response) {
-				if (err) {
-					console.log(err)
-				}
-				for (i in user_response.members) {
-					user = user_response.members[i].id;
-					var is_bot = user_response.members[i].is_bot;
-					for (j in dms) {
-						if (dms[j].user == user) {
-							if (!is_bot && user != 'USLACKBOT') {
-								dms[j].email = user_response.members[i].profile.email
-									dms[j].remind = true
-							} else {
-								dms.splice(j, 1)
-							}
-						}
-					}
-				}
-				nagUsers(dms);
-			});
-		});
+    nagUsers(dms);
 	});
 
 	/*
