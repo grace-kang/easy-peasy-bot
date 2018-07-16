@@ -188,14 +188,14 @@ module.exports = function(controller) {
       if (user == dms[i].user) {
         if (dms[i].remind) {
           dms[i].remind = false;
-          bot.reply(message, "You have turned off reminders. To turn them back on, use the command 'toggle'";
+          bot.reply(message, "You have turned off reminders. To turn them back on, use the command 'toggle'");
         } else {
-          bot.reply(message, "You have turned on reminders. To turn them off, use the command 'toggle'";
+          bot.reply(message, "You have turned on reminders. To turn them off, use the command 'toggle'");
           dms[i].remind = true;
         }
       }
     }
-  }
+  });
 }
 
 
