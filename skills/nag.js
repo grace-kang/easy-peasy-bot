@@ -178,6 +178,24 @@ module.exports = function(controller) {
 			console.log(error);
 		});
 	});
+
+  /* 
+   * When 'toggle' is heard, will toggle on/off the reminders for the user
+   */
+  controller.hears('^toggle', 'direct_message,direct_mention', function(bot, message) {
+    var user = message.user;
+    for (i in dms) {
+      if (user == dms[i].user) {
+        if (dms[i].remind) {
+          dms[i].remind = false;
+          bot.reply(message, "You have turned off reminders. To turn them back on, use the command 'toggle'";
+        } else {
+          bot.reply(message, "You have turned on reminders. To turn them off, use the command 'toggle'";
+          dms[i].remind = true;
+        }
+      }
+    }
+  }
 }
 
 
