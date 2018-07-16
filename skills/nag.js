@@ -16,8 +16,8 @@ module.exports = function(controller) {
 	//this rule will execute the job every weekday at 9:00 AM
 	var rule = new schedule.RecurrenceRule();
 	rule.dayOfWeek = new schedule.Range(1, 5);
-	// rule.hour = 9;
-	// rule.minute = 0;
+	rule.hour = 9;
+	rule.minute = 0;
 	rule.second = 0;
 
 	/*
