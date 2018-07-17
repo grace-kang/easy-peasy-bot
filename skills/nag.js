@@ -130,20 +130,19 @@ module.exports = function(controller) {
 			.then(function(response) {
 				var weeks = response.data.weeks
 				var entries = response.data.entries
-				var reply = '| ';
+				var reply = "Here's your current progress: \n";
 				for (var i = 0; i < weeks.length; i++) {
 					if (weeks[i].length > 0) {
 						var date = new Date(weeks[i]).toDateString().split(' ')
-						weeks[i] = date[1] + ' ' + date[2] + '-' + (new Date(weeks[i]).getDate()+7);
+						weeks[i] = '*' + date[1] + ' ' + date[2] + '-' + (new Date(weeks[i]).getDate()+7) + ' :* ';
 						reply += weeks[i];
 						if (entries[i] && entries[i+1]) {
-							reply += ':heavy_check_mark: |';
+							reply += ' :heavy_check_mark:\n';
 						} else {
-							reply += ':x: |';
+							reply += ' :x:\n';
 						}
 					}
 				}
-				console.log(reply)
 				bot.reply(message, reply);
 			})
 		.catch(error => {
