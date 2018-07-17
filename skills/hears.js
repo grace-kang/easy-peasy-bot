@@ -59,8 +59,12 @@ module.exports = function(controller) {
 	});
 
 	controller.on('direct_message,mention,direct_mention', function (bot, message) {
-		bot.reply(message, 'Sorry, I do not understand.');
+		bot.reply(message, 'Sorry, I do not understand. Type "help" to see what I understand.');
 	});
+
+  controller.hears('help', 'direct_message,direct_mention', function(bot, message) {
+    bot.reply(message, "Here's what you can say to me:\n    'toggle' -- Turn reminders on or off\n    'progress' -- View your current progress\n    'uptime' -- View my stats");
+  });
 
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
