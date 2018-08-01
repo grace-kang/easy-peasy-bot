@@ -93,4 +93,9 @@ controller.on('bot_channel_join', function (bot, message) {
 	bot.reply(message, "I'm here!")
 });
 
+// Ping app every 5 minutes to keep dyno awake
+var http = require('http')
+setInterval(function() {
+	http.get("http://nagbot-slack.herokuapp.com");
+}, 300000);
 
