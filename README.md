@@ -16,14 +16,14 @@ This bot will make a request to an external API and retrieve a list of emails co
 7. Obtain your script URL and your form URL from the Google Apps Script script editor of your form and your form's web page.
 7. Create a .env file and fill out the following:
 
-    ```text
-		CLIENT_ID=
-		CLIENT_SECRET=
-		PORT=
-		BOT_TOKEN=
-		WEBHOOK_URL=
-		REQUEST_URL=
-		WEB_URL=
-		```
+```
+	CLIENT_ID=
+	CLIENT_SECRET=
+	PORT=
+	BOT_TOKEN=
+	WEBHOOK_URL=
+	REQUEST_URL=
+	WEB_URL=
+```
 
 8. Run `npm start` in your terminal to run the bot locally.
